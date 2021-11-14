@@ -1,0 +1,79 @@
+---
+
+- name: Ensure required packages are installed
+  ansible.builtin.apt:
+    name: "{{ packages_deb }}"
+    state: present
+  tags:
+    - librenms-snmpd-agent
+
+
+- name: Prepare defaults for SNMPd
+  ansible.builtin.template:
+    src: etc/default/snmpd.j2
+    dest: /etc/default/snmpd
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_snmpd
+  tags:
+    - librenms-snmpd-agent
+
+
+- name: Prepare check distro tool for snmp
+  ansible.builtin.copy:
+    src: "{{ librenms_check_distro }}"
+    dest: "/{{ librenms_check_distro }}"
+    owner: root
+    group: root
+    mode: 0755
+  register: "check_distro"
+  tags:
+    - librenms-snmpd-agent
+
+- name: Prepare check entropy tool for SNMPd
+  ansible.builtin.copy:
+    src: "{{ librenms_check_entropy }}"
+    dest: "/{{ librenms_check_entropy }}"
+    owner: root
+    group: root
+    mode: 0755
+  register: "check_entropy"
+  tags:
+    - librenms-snmpd-agent
+
+- name: Prepare check osupdate tool for SNMPd
+  ansible.builtin.copy:
+    src: "{{ librenms_check_osupdate }}"
+    dest: "/{{ librenms_check_osupdate }}"
+    owner: root
+    group: root
+    mode: 0755
+  register: "check_osupdate"
+  tags:
+    - librenms-snmpd-agent
+
+- name: Prepare check DHCP server tool for SNMPd
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+  register: "check_dhcpd"
+  with_items:
+    - "{{ librenms_check_dhcp }}"
+    - "{{ librenms_check_dhcp_json }}"
+  tags:
+    - librenms-snmpd-agent
+
+- name: Prepare configuration for SNMPd with tools
+  ansible.builtin.template:
+    src: etc/snmp/snmpd.conf.j2
+    dest: /etc/snmp/snmpd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_snmpd
+  tags:
+    - librenms-snmpd-agent

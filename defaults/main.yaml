@@ -1,0 +1,15 @@
+---
+
+packages_deb:
+  - snmpd
+
+snmp_community_ro: "change_me_hk2c7f15achf"
+snmpd_sys_contact: "root <root@localhost>"
+snmpd_sys_location: "Sitting on the Dock of the Bay"
+
+
+librenms_check_dhcp: "etc/snmp/dhcp.py"
+librenms_check_dhcp_json: "etc/snmp/dhcp.json"
+librenms_check_distro: "usr/local/bin/distro"
+librenms_check_entropy: "etc/snmp/entropy.sh"
+librenms_check_osupdate: "etc/snmp/osupdate"
