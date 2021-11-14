@@ -11,5 +11,7 @@ snmpd_sys_location: "Sitting on the Dock of the Bay"
 librenms_check_dhcp: "etc/snmp/dhcp.py"
 librenms_check_dhcp_json: "etc/snmp/dhcp.json"
 librenms_check_distro: "usr/local/bin/distro"
+librenms_check_docker_enable: false
+librenms_check_docker: "usr/local/bin/docker-stats.sh"
 librenms_check_entropy: "etc/snmp/entropy.sh"
 librenms_check_osupdate: "etc/snmp/osupdate"

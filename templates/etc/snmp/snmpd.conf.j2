@@ -89,7 +89,12 @@ rocommunity  {{ snmp_community_ro }} 172.27.2.32/29
 extend .1.3.6.1.4.1.2021.7890.1 distro /{{ librenms_check_distro }}
 {% endif %}
 
-# Extend
+# Check for docker if exists
+{% if check_docker and librenms_check_docker_enable %}
+extend docker /{{ librenms_check_docker }}
+{% endif %}
+
+# Check entropy
 {% if check_entropy %}
 extend entropy /{{ librenms_check_entropy }}
 {% endif %}
@@ -99,12 +104,12 @@ extend entropy /{{ librenms_check_entropy }}
 extend osupdate /{{ librenms_check_osupdate }}
 {% endif %}
 
-# Extend NFS Server
+# Extend NFS Server if configured
 {% if check_nfs_server is defined %}
 extend nfs-server /bin/cat /proc/net/rpc/nfsd
 {% endif %}
 
-# Extend DHCP Server
+# Extend DHCP Server if configured
 {% if check_dhcp_server is defined and check_dhcpd%}
 extend dhcpstats /{{ librenms_check_dhcp }}
 {% endif %}

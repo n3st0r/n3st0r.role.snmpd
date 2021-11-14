@@ -67,6 +67,18 @@
   tags:
     - librenms-snmpd-agent
 
+
+- name: Prepare check_docker tool for SNMPd
+  ansible.builtin.copy:
+    src: "{{ librenms_check_docker }}"
+    dest: "/{{ librenms_check_docker }}"
+    owner: root
+    group: root
+    mode: 0755
+  register: "check_docker"
+  tags:
+    - librenms-snmpd-agent
+
 - name: Prepare configuration for SNMPd with tools
   ansible.builtin.template:
     src: etc/snmp/snmpd.conf.j2
