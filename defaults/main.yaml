@@ -6,6 +6,7 @@ packages_deb:
 snmp_community_ro: "change_me_hk2c7f15achf"
 snmpd_sys_contact: "root <root@localhost>"
 snmpd_sys_location: "Sitting on the Dock of the Bay"
+snmpd_white_list: "192.168.0.0/24"
 
 
 librenms_check_dhcp: "etc/snmp/dhcp.py"
