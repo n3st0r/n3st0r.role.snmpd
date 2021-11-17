@@ -67,6 +67,14 @@
   tags:
     - librenms-snmpd-agent
 
+- name: Determine available groups
+  getent:
+    database: group
+
+- name: Add additional groups to user
+  user: name="Debian-snmp" groups="docker" append=yes
+  when: "'docker' in ansible_facts.getent_group"
+
 
 - name: Prepare check_docker tool for SNMPd
   ansible.builtin.copy:
@@ -76,6 +84,7 @@
     group: root
     mode: 0755
   register: "check_docker"
+  when: "'docker' in ansible_facts.getent_group"
   tags:
     - librenms-snmpd-agent
 
